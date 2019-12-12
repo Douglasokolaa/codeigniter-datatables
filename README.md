@@ -24,4 +24,14 @@ $this->load->library('datatables_server_side', array(
 	'where' => array() //associative array or custom where string
 ));
 ```
+### Access the library
+Once the library is loaded, you need to call the following method:
+```
+$this->datatables_server_side->process();
+``` 
+The function accepts two parameters which are both optional:
+
+***row_id***
+
+***row_class***
 ## Sample
