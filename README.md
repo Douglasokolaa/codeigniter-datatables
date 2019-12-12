@@ -29,9 +29,13 @@ Once the library is loaded, you need to call the following method:
 ```
 $this->datatables_server_side->process();
 ``` 
-The function accepts two parameters which are both optional:
+The method accepts two parameters which are both optional:
 
-***row_id***
+**row_id (String)**
+
+*Possible values: 'id', 'data', 'none'*
+
+*Default: 'data'*
 
 ***row_class***
 ## Sample
