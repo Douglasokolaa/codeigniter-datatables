@@ -32,9 +32,21 @@ $this->datatables_server_side->process();
 The method accepts two parameters which are both optional. These parameters are used to add / modify *tr* tag.
 
 **row_id (String)**
-*Possible values: 'id', 'data', 'none'*
-*Default: 'data'*
-*Example*
 
+*Possible values: 'id', 'data', 'none'*
+
+*Example*
+```
+$this->datatables_server_side->process('id');
+//<tr id="10" role="row" class="odd">
+``` 
+```
+$this->datatables_server_side->process('data'); //Default
+//<tr data-id="10" role="row" class="odd">
+``` 
+```
+$this->datatables_server_side->process('none');
+//<tr role="row" class="odd">
+``` 
 ***row_class***
 ## Sample
