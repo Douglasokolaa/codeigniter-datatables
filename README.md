@@ -35,7 +35,7 @@ The method accepts two parameters which are both optional. These parameters are 
 
 *Possible values: 'id', 'data', 'none'*
 
-*Example*
+*Examples*
 ```
 $this->datatables_server_side->process('id');
 //<tr id="10" role="row" class="odd">
@@ -49,4 +49,16 @@ $this->datatables_server_side->process('none');
 //<tr role="row" class="odd">
 ``` 
 ***row_class***
+
+*Possible values: '', 'class_name'*
+
+*Examples* 
+```
+$this->datatables_server_side->process('none', ''); //Default
+//<tr role="row" class="odd">
+``` 
+```
+$this->datatables_server_side->process('none', 'class_name');
+//<tr role="row" class="class_name odd">
+``` 
 ## Sample
