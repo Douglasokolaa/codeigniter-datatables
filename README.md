@@ -125,11 +125,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 ```
 ## Known issues
-* Only zero-based column numbering is currently supported
-
-hello there
-
-hello another
-
-* b
-* c
+*	Only zero-based column numbering is currently supported
+	hello there
+	hello another
+* 	b
+* 	c
