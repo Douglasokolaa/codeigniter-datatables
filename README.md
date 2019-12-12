@@ -29,7 +29,7 @@ Once the library is loaded, you need to call the following method:
 ```
 $this->datatables_server_side->process();
 ``` 
-The method accepts two parameters which are both optional:
+The method accepts two parameters which are both optional. These parameters are used to add / modify *tr* tag.
 
 **row_id (String)**
 
