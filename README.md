@@ -18,10 +18,10 @@ Download **Datatables_server_side.php** and add it to your *application/librarie
 From within any of your Controller methods, initialize library using the CodeIgniter's standard way. You **MUST** pass data as an array via the second parameter and it will be passed to the library's constructor:
 ```
 $this->load->library('datatables_server_side', array(
-	'table' => 'customer',
-	'primary_key' => 'customer_id',
-	'columns' => array('first_name', 'last_name', 'email'),
-	'where' => array()
+	'table' => 'customer', //name of the table to fetch data from
+	'primary_key' => 'customer_id', //primary key field name
+	'columns' => array('first_name', 'last_name', 'email'), //zero-based array of field names. 
+	'where' => array() //associative array or custom where string
 ));
 ```
 ## Sample
