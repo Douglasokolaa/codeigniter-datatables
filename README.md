@@ -48,7 +48,7 @@ $this->datatables_server_side->process('data'); //Default
 $this->datatables_server_side->process('none');
 //<tr role="row" class="odd">
 ``` 
-***row_class***
+***row_class (String)***
 
 *Possible values: '', 'class_name'*
 
@@ -62,3 +62,65 @@ $this->datatables_server_side->process('none', 'class_name');
 //<tr role="row" class="class_name odd">
 ``` 
 ## Sample
+The following sample uses sakila dump downloaded from (https://dev.mysql.com/doc/index-other.html). You can also clone this repository and run it on your local machine to see an end to end working example.
+### Controller
+```
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Welcome extends CI_Controller {
+
+	public function index()
+	{
+		$this->load->helper('url');
+		$this->load->view('home');
+	}
+
+	public function load_data()
+	{
+		$this->load->library('datatables_server_side', array(
+			'table' => 'customer',
+			'primary_key' => 'customer_id',
+			'columns' => array('first_name', 'last_name', 'email'),
+			'where' => array()
+		));
+
+		$this->datatables_server_side->process();
+	}
+}
+```
+### View
+```
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html>
+<head>
+	<title>Server-side processing</title>
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+</head>
+<body>
+	<table id="users">
+		<thead>
+			<tr>
+				<th>First name</th>
+				<th>Last name</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+	</table>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#users').dataTable({
+				serverSide: true,
+				ajax: '<?php echo base_url('welcome/load_data'); ?>'
+			});
+		});
+	</script>
+</body>
+</html>
+```
