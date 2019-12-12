@@ -2,8 +2,10 @@
 ## What is it?
 A CodeIgniter library for building a Datatables server side processing SQL query.
 
-Links
+**Links**
+
 [CodeIgniter](https://codeigniter.com/)
+
 [DataTables](https://datatables.net/)
 ## Installation
 ## Sample
