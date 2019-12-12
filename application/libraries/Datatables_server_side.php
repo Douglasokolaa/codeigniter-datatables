@@ -3,18 +3,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Datatables_server_side {
 
+	/**
+	 * Database table
+	 *
+	 * @var	string
+	 */
 	private $table;
 
+	/**
+	 * Primary key
+	 *
+	 * @var	string
+	 */
 	private $primary_key;
 
+	/**
+	 * Columns to fetch
+	 *
+	 * @var	array
+	 */
 	private $columns;
 
+	/**
+	 * Where clause
+	 *
+	 * @var	mixed
+	 */
 	private $where;
 
+	/**
+	 * CI Singleton
+	 *
+	 * @var	object
+	 */
 	private $CI;
 
+	/**
+	 * GET request
+	 *
+	 * @var	array
+	 */
 	private $request;
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Constructor
+	 *
+	 * @param	array	$params	Initialization parameters
+	 * @return	void
+	 */
 	public function __construct($params)
 	{
 		$this->table = (array_key_exists('table', $params) === TRUE && is_string($params['table']) === TRUE) ? $params['table'] : '';
@@ -38,6 +76,13 @@ class Datatables_server_side {
 		$this->validate_request();
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Validate database table
+	 *
+	 * @return	void
+	 */
 	private function validate_table()
 	{
 		if ($this->CI->db->table_exists($this->table) === FALSE)
@@ -48,6 +93,13 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Validate primary key
+	 *
+	 * @return	void
+	 */
 	private function validate_primary_key()
 	{
 		if ($this->CI->db->field_exists($this->primary_key, $this->table) === FALSE)
@@ -58,6 +110,13 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * validate columns to fetch
+	 *
+	 * @return	void
+	 */
 	private function validate_columns()
 	{
 		foreach ($this->columns as $column)
@@ -71,6 +130,13 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * validate GET request
+	 *
+	 * @return	void
+	 */
 	private function validate_request()
 	{
 		if (count($this->request['columns']) !== count($this->columns))
@@ -93,6 +159,13 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Generates the ORDER BY portion of the query
+	 *
+	 * @return	CI_DB_query_builder
+	 */
 	private function order()
 	{
 		foreach ($this->request['order'] as $order)
@@ -106,6 +179,13 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Generates the LIKE portion of the query
+	 *
+	 * @return	CI_DB_query_builder
+	 */
 	private function search()
 	{
 		$search_value = $this->request['search']['value'];
@@ -133,11 +213,26 @@ class Datatables_server_side {
 		}
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Generates the WHERE portion of the query
+	 *
+	 * @return	CI_DB_query_builder
+	 */
 	private function where()
 	{
 		$this->CI->db->where($this->where);
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Send response to DataTables
+	 *
+	 * @param	array	$data
+	 * @return	void
+	 */
 	private function response($data)
 	{
 		$this->CI->output->set_content_type('application/json');
@@ -147,6 +242,13 @@ class Datatables_server_side {
         exit;
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Calculate total number of records
+	 *
+	 * @return	int
+	 */
 	private function records_total()
 	{
 		$this->CI->db->reset_query();
@@ -158,6 +260,13 @@ class Datatables_server_side {
 		return $this->CI->db->count_all_results();
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Calculate filtered records
+	 *
+	 * @return	int
+	 */
 	private function records_filtered()
 	{
 		$this->CI->db->reset_query();
@@ -171,6 +280,15 @@ class Datatables_server_side {
 		return $this->CI->db->count_all_results();
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Process
+	 *
+	 * @param	string	$row_id = 'data'
+	 * @param	string	$row_class = ''
+	 * @return	void
+	 */
 	public function process($row_id = 'data', $row_class = '')
 	{
 		if (in_array($row_id, array('id', 'data', 'none'), TRUE) === FALSE)
