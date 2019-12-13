@@ -188,31 +188,44 @@ class Datatables_server_side {
 	 */
 	private function search()
 	{
-		$search_value = $this->request['search']['value'];
+		$global_search_value = $this->request['search']['value'];
+		$likes = [];
 
-		if (empty($search_value) === FALSE)
+		foreach ($this->request['columns'] as $column)
 		{
-			$first_like = TRUE;
-
-			foreach ($this->request['columns'] as $column)
+			if ($column['searchable'] === 'true')
 			{
-				if ($column['searchable'] === 'true')
+				if (empty($global_search_value) === FALSE)
 				{
-					if ($first_like === TRUE)
-					{
-						$this->CI->db->like($column['name'], $search_value);
+					$likes[] = array(
+						'field' => $column['name'],
+						'match' => $global_search_value
+					);
+				}
 
-						$first_like = FALSE;
-					}
-					else
-					{
-						$this->CI->db->or_like($column['name'], $search_value);
-					}
+				if (empty($column['search']['value']) === FALSE)
+				{
+					$likes[] = array(
+						'field' => $column['name'],
+						'match' => $column['search']['value']
+					);
 				}
 			}
 		}
-	}
 
+		foreach ($likes as $index => $like)
+		{
+			if ($index === 0)
+			{
+				$this->CI->db->like($like['field'], $like['match']);
+			}
+			else
+			{
+				$this->CI->db->or_like($like['field'], $like['match']);
+			}
+		}
+	}
+	
 	// --------------------------------------------------------------------
 
 	/**
