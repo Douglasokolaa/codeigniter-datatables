@@ -127,5 +127,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ### Output
 ![Sample](/assets/img/sample.png)
 ## Known issues
-* Only zero-based column numbering is currently supported: 0 -> first column, 1 -> second column, etc.
+* Only zero-based column labelling is currently supported: 0 -> first column, 1 -> second column, etc.
 * No data processors / formatters. All data processing / formatting must be done at the front end.
